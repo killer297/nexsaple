@@ -12,8 +12,6 @@
 // Deploy this on any Node-capable host (Render, Railway, a VPS, cPanel Node app, etc.)
 
 require('dotenv').config();
-const cors = require('cors');
-const app = express();
 const express = require('express');
 const nodemailer = require('nodemailer');
 const fs = require('fs');
@@ -81,7 +79,7 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
     if (process.env.SMTP_USER && process.env.SMTP_PASS) {
       await transporter.sendMail({
         from: `"Nexsaple Website" <${process.env.SMTP_USER}>`,
-        to: process.env.CONTACT_EMAIL || 'support@nexsaple.com',
+        to: process.env.CONTACT_EMAIL || 'hello@nexsaple.com',
         replyTo: email,
         subject: `New project inquiry from ${name}`,
         text:
