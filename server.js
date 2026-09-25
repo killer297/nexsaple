@@ -81,7 +81,7 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
     if (process.env.SMTP_USER && process.env.SMTP_PASS) {
       await transporter.sendMail({
         from: `"Nexsaple Website" <${process.env.SMTP_USER}>`,
-        to: process.env.CONTACT_EMAIL || 'hello@nexsaple.com',
+        to: process.env.CONTACT_EMAIL || 'nexsaple726@gmail.com',
         replyTo: email,
         subject: `New project inquiry from ${name}`,
         text:
