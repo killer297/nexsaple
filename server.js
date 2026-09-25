@@ -13,6 +13,9 @@
 
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
+const nodemailer = require('nodemailer');
+const express = require('express');
 const nodemailer = require('nodemailer');
 const fs = require('fs');
 const path = require('path');
