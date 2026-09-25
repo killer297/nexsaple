@@ -66,14 +66,19 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
     fs.writeFileSync(DATA_FILE, JSON.stringify(existing, null, 2));
 
     // 2) email the inquiry, if SMTP credentials are configured
-if (process.env.SMTP_USER && process.env.SMTP_PASS) {
-  await transporter.sendMail({
-    from: `"Nexsaple Website" <${process.env.SMTP_USER}>`,
-    to: process.env.CONTACT_EMAIL || 'nexsaple726@gmail.com',
-    replyTo: email,
+// 2) send the inquiry using Resend
+const resendResponse = await fetch('https://api.resend.com/emails', {
+  method: 'POST',
+  headers: {
+    'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    from: 'Nexsaple Website <onboarding@resend.dev>',
+    to: [process.env.CONTACT_EMAIL || 'nexsaple726@gmail.com'],
+    reply_to: email,
     subject: `New project inquiry from ${name}`,
-    text:
-`New inquiry received on the Nexsaple website.
+    text: `New inquiry received on the Nexsaple website.
 
 Name: ${name}
 Email: ${email}
@@ -84,9 +89,13 @@ Budget: ${budget || '-'}
 
 Message:
 ${message}`
-  });
-} else {
-  console.warn('SMTP_USER / SMTP_PASS not set — submission was saved but no email was sent.');
+  })
+});
+
+if (!resendResponse.ok) {
+  const resendError = await resendResponse.text();
+  console.error('Resend error:', resendError);
+  throw new Error('Email could not be sent.');
 }
 
     res.json({ success: true });
