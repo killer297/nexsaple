@@ -14,12 +14,12 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const nodemailer = require('nodemailer');
 const fs = require('fs');
 const path = require('path');
 const rateLimit = require('express-rate-limit');
 
 const app = express();
+app.set('trust proxy', 1);
 const PORT = process.env.PORT || 3000;
 const DATA_DIR = path.join(__dirname, 'data');
 const DATA_FILE = path.join(DATA_DIR, 'submissions.json');
@@ -37,18 +37,6 @@ const contactLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 10,                  // 10 submissions per IP per window
   message: { success: false, error: 'Too many submissions. Please try again later.' }
-});
-
-// SMTP transporter — works with Gmail (App Password), your hosting SMTP,
-// or a provider like Zoho Mail / SendGrid / Brevo.
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: Number(process.env.SMTP_PORT) || 587,
-  secure: Number(process.env.SMTP_PORT) === 465, // true for port 465, false for 587
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS
-  }
 });
 
 // --- contact form endpoint ---
@@ -78,13 +66,13 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
     fs.writeFileSync(DATA_FILE, JSON.stringify(existing, null, 2));
 
     // 2) email the inquiry, if SMTP credentials are configured
-    if (process.env.SMTP_USER && process.env.SMTP_PASS) {
-      await transporter.sendMail({
-        from: `"Nexsaple Website" <${process.env.SMTP_USER}>`,
-        to: process.env.CONTACT_EMAIL || 'nexsaple726@gmail.com',
-        replyTo: email,
-        subject: `New project inquiry from ${name}`,
-        text:
+if (process.env.SMTP_USER && process.env.SMTP_PASS) {
+  await transporter.sendMail({
+    from: `"Nexsaple Website" <${process.env.SMTP_USER}>`,
+    to: process.env.CONTACT_EMAIL || 'nexsaple726@gmail.com',
+    replyTo: email,
+    subject: `New project inquiry from ${name}`,
+    text:
 `New inquiry received on the Nexsaple website.
 
 Name: ${name}
@@ -96,10 +84,10 @@ Budget: ${budget || '-'}
 
 Message:
 ${message}`
-      });
-    } else {
-      console.warn('SMTP_USER / SMTP_PASS not set — submission was saved but no email was sent.');
-    }
+  });
+} else {
+  console.warn('SMTP_USER / SMTP_PASS not set — submission was saved but no email was sent.');
+}
 
     res.json({ success: true });
   } catch (err) {
