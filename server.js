@@ -75,7 +75,7 @@ const resendResponse = await fetch('https://api.resend.com/emails', {
   },
   body: JSON.stringify({
     from: 'Nexsaple Website <noreply@nexsaple.com>',
-    to: [process.env.CONTACT_EMAIL || 'nexsaple726@gmail.com'],
+    to: [process.env.CONTACT_EMAIL || 'support@nexsaple.com'],
     reply_to: email,
     subject: `New project inquiry from ${name}`,
     text: `New inquiry received on the Nexsaple website.
