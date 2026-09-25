@@ -366,7 +366,7 @@ footer{border-top:1px solid var(--border); padding:70px 0 30px;}
         <div class="info-item"><div class="info-icon">✉</div><div><h4>Email</h4><a href="mailto:support@nexsaple.com">support@nexsaple.com</a></div></div>
         <div class="info-item"><div class="info-icon">☎</div><div><h4>Phone</h4><a href="tel:+919369641023">+91 9369641023</a></div></div>
         <div class="info-item"><div class="info-icon">📍</div><div><h4>Location</h4><p>Lucknow, Uttar Pradesh, India</p></div></div>
-        <div class="info-item"><div class="info-icon">🕐</div><div><h4>Business Hours</h4><p>Mon – Sat, 10:00 AM – 7:00 PM IST</p></div></div>
+        <div class="info-item"><div class="info-icon">🕐</div><div><h4>Business Hours</h4><p>Mon – Fri, 10:00 AM – 5:00 PM IST</p></div></div>
       </div>
       <form id="inquiryForm">
         <div><label>Full Name</label><input type="text" name="name" required></div>
@@ -385,7 +385,7 @@ footer{border-top:1px solid var(--border); padding:70px 0 30px;}
         <div class="full"><label>Message</label><textarea name="message" required></textarea></div>
         <div class="full">
           <button type="submit" class="btn btn-primary" style="width:100%" id="submitBtn">Send Project Inquiry</button>
-          <p class="form-note" id="formNote">Submissions are sent directly to our server and emailed tonexsaple.com.</p>
+          <p class="form-note" id="formNote">Submissions are sent directly to our server and emailed to support@nexsaple.com.</p>
         </div>
       </form>
     </div>
@@ -408,10 +408,10 @@ footer{border-top:1px solid var(--border); padding:70px 0 30px;}
         <li><a href="#services">App Development</a></li><li><a href="#services">CRM Development</a></li>
         <li><a href="#services">Cybersecurity</a></li><li><a href="#services">Digital Marketing</a></li></ul></div>
       <div class="foot-col"><h4>Contact</h4><ul>
-        <li>hello@nexsaple.com</li><li>+91 98765 43210</li><li>Lucknow, Uttar Pradesh, India</li></ul></div>
+        <li>support@nexsaple.com</li><li>+91 9369641023</li><li>Lucknow, Uttar Pradesh, India</li></ul></div>
     </div>
     <div class="foot-bottom">
-      <p>© 2026 Nexsaple Infotech Services Pvt. Ltd. All Rights Reserved.</p>
+      <p>©️ 2026 Nexsaple Infotech Services Pvt. Ltd. All Rights Reserved.</p>
       <div class="foot-legal"><a href="#">Privacy Policy</a><a href="#">Terms & Conditions</a><a href="#">Cookie Policy</a></div>
     </div>
   </div>
@@ -528,12 +528,15 @@ overlay.addEventListener('click',(e)=>{if(e.target===overlay)overlay.classList.r
 const inquiryForm=document.getElementById('inquiryForm');
 const submitBtn=document.getElementById('submitBtn');
 const formNote=document.getElementById('formNote');
+
+const API_URL = 'https://nexsaple-pqps.onrender.com';
+  
 inquiryForm.addEventListener('submit', async (e)=>{
   e.preventDefault();
   submitBtn.disabled=true; submitBtn.textContent='Sending...';
   const data=Object.fromEntries(new FormData(inquiryForm).entries());
   try{
-    const res=await fetch('/api/contact',{
+   const res = await fetch(`${API_URL}/api/contact`, {
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify(data)
