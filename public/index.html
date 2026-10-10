@@ -489,12 +489,12 @@ document.getElementById('processList').innerHTML=process.map(p=>`<div class="pro
 
 // portfolio
 const projects=[
- {cat:'Web Development',tag:'Web · Demo Project',title:'Retail Storefront Concept',desc:'A concept e-commerce storefront exploring a fast, conversion-focused product browsing experience.',tech:'Next.js, Node.js, MongoDB',initial:'R'},
- {cat:'Software',tag:'Software · Concept Project',title:'Inventory Management Concept',desc:'A concept internal tool for tracking stock, orders and supplier data in one dashboard.',tech:'React, Python, MySQL',initial:'I'},
- {cat:'Apps',tag:'App · Demo Project',title:'Service Booking App Concept',desc:'A cross-platform booking app concept for scheduling and managing local service appointments.',tech:'Flutter, Firebase',initial:'S'},
- {cat:'CRM',tag:'CRM · Concept Project',title:'Lead Pipeline CRM Concept',desc:'A concept CRM for tracking leads, follow-ups and sales pipeline stages.',tech:'React, Node.js, MongoDB',initial:'L'},
+ {cat:'Web Development',tag:'Web · Demo Project',title:'Retail Storefront Concept',desc:'A concept e-commerce storefront exploring a fast, conversion-focused product browsing experience.',tech:'Next.js, Node.js, MongoDB',initial:'W', url:'https://saurabhdrycleaner.com'},
+ {cat:'Software',tag:'Software · Concept Project',title:'Inventory Management Concept',desc:'A concept internal tool for tracking stock, orders and supplier data in one dashboard.',tech:'React, Python, MySQL',initial:'S'},
+ {cat:'Apps',tag:'App · Demo Project',title:'Service Booking App Concept',desc:'A cross-platform booking app concept for scheduling and managing local service appointments.',tech:'Flutter, Firebase',initial:'A'},
+ {cat:'CRM',tag:'CRM · Concept Project',title:'Lead Pipeline CRM Concept',desc:'A concept CRM for tracking leads, follow-ups and sales pipeline stages.',tech:'React, Node.js, MongoDB',initial:'C'},
  {cat:'Cybersecurity',tag:'Security · Demo Project',title:'Web App Hardening Demo',desc:'A demonstration of a security review workflow covering common web vulnerabilities.',tech:'OWASP practices, manual testing',initial:'W'},
- {cat:'Design',tag:'Design · Concept Project',title:'Brand Identity Concept',desc:'A concept visual identity system including logo, colour palette and social templates.',tech:'Figma',initial:'B'}
+ {cat:'Design',tag:'Design · Concept Project',title:'Brand Identity Concept',desc:'A concept visual identity system including logo, colour palette and social templates.',tech:'Figma',initial:'D'}
 ];
 const cats=['All','Web Development','Software','Apps','CRM','Cybersecurity','Design'];
 document.getElementById('filterRow').innerHTML=cats.map((c,i)=>`<button class="filter-btn ${i===0?'active':''}" data-cat="${c}">${c}</button>`).join('');
